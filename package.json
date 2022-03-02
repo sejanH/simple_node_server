@@ -1,0 +1,21 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "simple node server",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "author": "Mominul Haque Sejan",
+  "license": "ISC",
+  "dependencies": {
+    "cluster": "^0.7.7",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "nodemon": "^2.0.15"
+  },
+  "devDependencies": {
+    "autocannon": "^7.7.0"
+  }
+}
