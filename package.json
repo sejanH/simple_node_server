@@ -4,13 +4,14 @@
   "description": "simple node server",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "start": "cross-env NODE_ENV=production node index.js"
   },
   "author": "Mominul Haque Sejan",
   "license": "ISC",
   "dependencies": {
     "cluster": "^0.7.7",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "nodemon": "^2.0.15"
