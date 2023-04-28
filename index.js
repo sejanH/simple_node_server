@@ -7,28 +7,33 @@ const port = process.env.PORT || 5000;// Check the number of available CPU.
 const os = require("os");
 const cluster = require('cluster');
 const numCPUs = os.cpus().length;
+
 if (cluster.isMaster) {
-    console.log(`Master ${process.pid} is running`);
+    console.log(`Parent ${process.pid} is running on ${port}`);
     // Fork workers.
-    for (let i = 0; i < numCPUs; i++) {
+    if (process.env.NODE_ENV === 'production') {
+        for (let i = 0; i < numCPUs; i++) {
+            cluster.fork();
+        }
+    } else {
         cluster.fork();
     }
     // This event is firs when worker died
     cluster.on('exit', (worker, code, signal) => {
         console.log(`worker ${worker.process.pid} died`);
+        cluster.fork();
     });
 }
-
-// For Worker
 else {
-    app.get('/', (req, res) => {
-        res.send('I am just a server for api data.')
-    });
+    // For Worker
     // Workers can share any TCP connection
     // In this case it is an HTTP server
     app.listen(port, err => {
         err ?
             console.log("Error in server setup") :
-            console.log(`Worker ${process.pid} started`);
+            console.log(`Child ${process.pid} started`);
     });
 }
+app.get('/', (req, res) => {
+    res.send('I am just a server for api data.')
+});
